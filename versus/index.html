@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <script type="text/javascript" src="fastfoodJson.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+        var view = new google.visualization.arrayToDataTable(fastfoodJson);
+
+        var options = {
+          title: 'Restaurants Max Unhealthy Food',
+          bar: {groupWidth: "95%"},
+          legend: { position: "none" },
+          chartArea: {left:'10%',top:'10%', width: '65%', height: '65%'}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(view, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 1300px; height: 600px;"></div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+import sqlite3
+import time
+import zlib
+
+conn = sqlite3.connect('dataset.sqlite')
+cur = conn.cursor()
+
+fhand = open('fastfoodJson.js','w')
+fhand.write("fastfoodJson = [ ['Restaurant','cal_fat']")
+
+cur.execute('SELECT restaurant, item, ((MAX(calories) + MAX(cal_fat) + MAX(total_fat) + MAX(sat_fat) + MAX(trans_fat) + MAX(sugar)) / COUNT(DISTINCT(restaurant))) as food_value FROM fastfood GROUP BY restaurant ORDER BY food_value DESC, restaurant')
+for row in cur:
+    fhand.write(",\n['"+row[0]+"'")
+    fhand.write(","+str(row[2])+"")
+    # fhand.write(",'gold'")
+    fhand.write("]")
+
+fhand.write("\n];\n")
+fhand.close()
+
+print("Finished fastfoodJson")
